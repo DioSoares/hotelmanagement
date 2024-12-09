@@ -3,6 +3,7 @@ package com.gerenciamentohotel.hotelmanagement.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 @Data
@@ -12,15 +13,32 @@ public class Quarto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String numero;
 
+    @NotNull
     private String tipo;
 
+    @NotNull
     private Double preco;
 
     @Column(columnDefinition = "booleam default true")
     private boolean disponivel;
 
+    @ManyToOne
+    @JoinColumn(name = "hotel_id, nullable = false")
+    private Hotel hotel;
+
+    public Quarto() {
+
+    }
+
+    public Quarto(String numero, String tipo, Double preco, Hotel hotel){
+        this.numero = numero;
+        this.tipo = tipo;
+        this.preco = preco;
+        this.hotel = hotel;
+    }
     public Long getId() {
         return id;
     }
