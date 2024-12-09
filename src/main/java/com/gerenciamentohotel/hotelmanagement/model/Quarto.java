@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.antlr.v4.runtime.misc.NotNull;
 
+import java.util.List;
+
 @Entity
 @Data
 public class Quarto {
@@ -22,12 +24,17 @@ public class Quarto {
     @NotNull
     private Double preco;
 
-    @Column(columnDefinition = "booleam default true")
+    @Column(columnDefinition = "boolean default true")
     private boolean disponivel;
+
 
     @ManyToOne
     @JoinColumn(name = "hotel_id, nullable = false")
     private Hotel hotel;
+
+    @OneToMany(mappedBy = "quarto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reserva> reservas;
+
 
     public Quarto() {
 

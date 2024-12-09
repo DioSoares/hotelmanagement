@@ -2,6 +2,7 @@ package com.gerenciamentohotel.hotelmanagement.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
 
@@ -13,15 +14,27 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private LocalDate checkin;
+
+    @NotNull
     private LocalDate checkout;
 
+
     @ManyToOne
-    @JoinColumn(name = "quarto_id")
+    @JoinColumn(name = "hotel_id", nullable = false)
+    private Hotel hotel;
+
+    @ManyToOne
+    @JoinColumn(name = "quarto_id", nullable = false)
     private Quarto quarto;
 
-    private String nomeCliente;
-    private String contatoCliente;
+    public Reserva(LocalDate checkin, LocalDate checkout, Hotel hotel, Quarto quarto) {
+        this.checkin = checkin;
+        this.checkout = checkout;
+        this.hotel = hotel;
+        this.quarto = quarto;
+    }
 
     public Long getId() {
         return id;
@@ -55,19 +68,11 @@ public class Reserva {
         this.quarto = quarto;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
+    public Hotel getHotel() {
+        return hotel;
     }
 
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
-    }
-
-    public String getContatoCliente() {
-        return contatoCliente;
-    }
-
-    public void setContatoCliente(String contatoCliente) {
-        this.contatoCliente = contatoCliente;
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 }
