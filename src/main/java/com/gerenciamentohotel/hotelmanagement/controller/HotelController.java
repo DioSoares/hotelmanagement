@@ -32,6 +32,12 @@ public class HotelController {
         return ResponseEntity.ok(hotelService.salvar(hotel));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Hotel> atualizarHotel(@PathVariable Long id, @RequestBody Hotel hotelAtualizado) {
+        Hotel hotel = hotelService.atualizar(id, hotelAtualizado);
+        return ResponseEntity.ok(hotel);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         hotelService.deletar(id);
